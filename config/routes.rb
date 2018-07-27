@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  root 'static_pages#home'
+  resources :users, :only => [:index]
 
-  devise_scope :user do
-    root to: 'devise/sessions#home'
-  end
 end
