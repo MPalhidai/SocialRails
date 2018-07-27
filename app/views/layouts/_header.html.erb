@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div class="row justify-content-between w-100 m-0">
+    <div class="col-sm-4">
+      <a class="navbar-brand" href="/">SocialRails</a>
+    </div>
+    <div class="col-sm-6 text-right">
+      <% if user_signed_in? %>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user"> <%= current_user.email %></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right text-center">
+            <%= link_to "Home", root_path %>
+            <br/>
+            <%= link_to "Account", edit_user_registration_path %>
+            <div class="dropdown-divider"></div>
+            <%= link_to "Log Out", destroy_user_session_path, :method => "delete" %>
+          </div>
+        </div>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, :class => "btn btn-outline-primary" %>
+        <%= link_to "Sign up", new_user_registration_path, :class => "btn btn-outline-primary" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
