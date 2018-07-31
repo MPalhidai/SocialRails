@@ -1,27 +1,28 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user! #possibly exclude friends to see friends of friends
 
-  def index
+  def index #show all user list to find friends that are not already friends
     @users = User.all
     @user = current_user
   end
 
-  def show
+  def show #show current_user timeline of all posts made by current_user and friends
+    # find posts where user_id == current_user or current_user.friends limit 10 per page think about scroll down loading like FB
   end
 
   def notifications
   end
 
-  def friends
+  def friends #show all friends of current_user
   end
 
-  # private
-  #
-  # def user_params
-  #   params.require(:user).permit(:first_name, :last_name, :email, :birthday)
-  # end
-  #
-  # def user
-  #   @user ||= User.find(params[:id])
-  # end
+  private
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :birthday)
+  end
+
+  def user
+    @user ||= User.find(params[:id])
+  end
 end
