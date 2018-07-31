@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   def index #show all user list to find friends that are not already friends
     @users = User.all
-    @user = current_user
   end
 
   def show #show current_user timeline of all posts made by current_user and friends

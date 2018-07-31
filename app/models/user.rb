@@ -12,4 +12,6 @@ class User < ApplicationRecord
   has_many :friend_requested, class_name: :Friend, foreign_key: :requested_id
 
   validates :first_name, :last_name, :email, :birthday, presence: true
+
+  # on create create profile
 end
