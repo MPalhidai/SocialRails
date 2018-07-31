@@ -8,7 +8,7 @@ class ProfileController < ApplicationController
   def update
     if profile.update_attributes(profile_params)
       flash[:success] = "You have successfully edited your profile."
-      redirect_to @profile
+      redirect_to profile_path
     else
       flash[:notice] = "Something went wrong saving your changes."
       render :edit
@@ -26,6 +26,6 @@ class ProfileController < ApplicationController
   end
 
   def profile
-    @profile ||= Profile.find(params[:id])
+    @profile ||= User.find(params[:id]).profile
   end
 end

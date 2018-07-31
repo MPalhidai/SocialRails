@@ -7,12 +7,15 @@ class UsersController < ApplicationController
 
   def show #show current_user timeline of all posts made by current_user and friends
     # find posts where user_id == current_user or current_user.friends limit 10 per page think about scroll down loading like FB
+    @posts = Post.all
   end
 
   def notifications
+    @notifications = current_user.notifications
   end
 
-  def friends #show all friends of current_user
+  def my_friends #show all friends of current_user
+    @my_friends = current_user.friends
   end
 
   private
