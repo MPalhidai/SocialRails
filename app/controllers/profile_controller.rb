@@ -7,7 +7,7 @@ class ProfileController < ApplicationController
 
   def update
     if profile.update_attributes(profile_params)
-      flash[:notice] = "You have successfully edited your profile."
+      flash[:success] = "You have successfully edited your profile."
       redirect_to @profile
     else
       flash[:notice] = "Something went wrong saving your changes."
