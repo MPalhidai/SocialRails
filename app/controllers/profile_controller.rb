@@ -22,7 +22,7 @@ class ProfileController < ApplicationController
   private
 
   def profile_params #add ability to change first_name, last_name, email, avatar
-    params.require(:profile).permit(:birthday, :gender, :location)
+    params.require(:profile).permit(:birthday, :gender, :location, :avatar)
   end
 
   def profile

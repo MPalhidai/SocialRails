@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(version: 2018_07_30_231107) do
 
   create_table "comments", force: :cascade do |t|
     t.string "content"
-    t.bigint "user_id_id"
-    t.bigint "post_id_id"
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id_id"], name: "index_comments_on_post_id_id"
-    t.index ["user_id_id"], name: "index_comments_on_user_id_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "friends", force: :cascade do |t|
@@ -57,31 +57,30 @@ ActiveRecord::Schema.define(version: 2018_07_30_231107) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.bigint "user_id_id"
+    t.bigint "user_id"
     t.string "liked_type"
     t.bigint "liked_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["liked_type", "liked_id"], name: "index_likes_on_liked_type_and_liked_id"
-    t.index ["user_id_id"], name: "index_likes_on_user_id_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
     t.string "content"
-    t.bigint "user_id_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id_id"], name: "index_posts_on_user_id_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.bigint "user_id_id"
-    t.date "birthday"
+    t.bigint "user_id"
     t.string "gender"
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id_id"], name: "index_profiles_on_user_id_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
