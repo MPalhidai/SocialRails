@@ -1,38 +1,40 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <h2>Network posts</h2>
+    <div class="post-list">
     <% @posts.reverse.each do |post| %>
-      <div class="post-list">
-        <div class="post-show">
-          <p>
-            <%#= image_tag post.user.profile.avatar %>
-            <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user_id) %>
-          </p>
-          <p>
-            <%= post.content %>
-            <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>">
-              reply
-            </a>
-          </p>
-          <div class="collapse" id="post_<%= post.id %>">
-            <%= render 'comments/new', post: post %>
+      <div class="post-show my-3">
+        <p>
+          <%#= image_tag post.user.profile.avatar %>
+          <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user_id) %>
+        </p>
+        <p>
+          <%= post.content %>
+          <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>">
+            reply
+          </a>
+        </p>
+        <div class="collapse" id="post_<%= post.id %>">
+          <%= render 'comments/new', post: post %>
+        </div>
+        <div class="comment-list">
+        <% post.comments.each do |comment| %>
+          <div class="comment-show pl-5">
+            <p>
+              <%#= image_tag comment.user.profile.avatar %>
+              <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user_id) %>
+            </p>
+            <p>
+              <%= comment.content %>
+              <% if comment.user_id == current_user.id %>
+                <%= link_to "remove comment", comment_path(comment.id), method: :delete %>
+              <% end %>
+            </p>
           </div>
-
-          <% post.comments.each do |comment| %>
-            <div class="comment-list">
-              <div class="comment-show pl-5">
-                <p>
-                  <%#= image_tag comment.user.profile.avatar %>
-                  <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user_id) %>
-                </p>
-                <p>
-                  <%= comment.content %>
-                </p>
-              </div>
-            </div>
-          <% end %>
+        <% end %>
         </div>
       </div>
     <% end %>
+    </div>
   </div>
 </div>
