@@ -1,2 +1,15 @@
-<h1>UsersController#my_friends</h1>
-<p>Find me in app/views/users_controller/my_friends.html.erb</p>
+<% provide(:title, "My friends") %>
+
+<div class="row justify-content-center">
+  <div class="col-8">
+    <h2>My Friends</h2>
+    <% @friends.each do |friend| %>
+      <div class="user-list">
+        <p>
+          <%#= image_tag friend.profile.avatar %>
+          <%=link_to "#{friend.first_name} #{friend.last_name}", profile_path(friend.id) %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>

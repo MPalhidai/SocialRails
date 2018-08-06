@@ -1,0 +1,17 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <%= form_for current_user.posts.build(@post) do |f| %>
+
+    <div class="field">
+      <%= f.label :content, "Update your status:" %>
+      <br/>
+      <%= f.text_area(:content, size: "16x4", class: 'form-control', placeholder: "What would you like to tell your friends") %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Post", class: "form-control btn btn-success" %>
+    </div>
+
+    <% end %>
+  </div>
+</div>

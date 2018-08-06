@@ -1,7 +1,15 @@
 <% provide(:title, "Find a friend") %>
 
-<div class="row justify-content-center list">
-	<div class="col-8">
-    <%#= render 'file/_partial with only name and avatar' %>
-	</div>
+<div class="row justify-content-center">
+  <div class="col-8">
+    <h2>Find a friend</h2>
+    <% @users.each do |user| %>
+      <div class="user-list">
+        <p>
+          <%#= image_tag user.profile.avatar %>
+          <%=link_to "#{user.first_name} #{user.last_name}", profile_path(user.id) %>
+        </p>
+      </div>
+    <% end %>
+  </div>
 </div>

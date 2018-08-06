@@ -9,7 +9,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
     if @post.save
       flash[:success] = "You have successfully made a post."
-      redirect_to user_path
+      redirect_to user_path(current_user.id)
     else
       flash[:notice] = "Something went wrong saving your post."
       render :new

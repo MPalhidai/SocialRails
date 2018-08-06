@@ -1,2 +1,26 @@
-<h1>UsersController#notifications</h1>
-<p>Find me in app/views/users_controller/notifications.html.erb</p>
+<% provide(:title, "Notifications") %>
+
+<div class="row justify-content-center">
+  <div class="col-8">
+    <h2>Notifications</h2>
+    <% if @notifications.empty? %>
+      <h6>No new notifications</h6>
+    <% else %>
+      <% @notifications.each do |notification| %>
+        <div class="user-list">
+          <p>
+            <%#= image_tag notification.profile.avatar %>
+            <%=link_to "#{requesting.first_name} #{requesting.last_name}", profile_path(requesting.id) %>
+            would like to be friends
+          </p>
+          <%= form_for notification, method: :delete do |send| %>
+            <%= send.button "Delete request", class: "btn btn-danger" %>
+          <% end %>
+          <%= form_for notification, method: :approve do |send| %>
+            <%= send.button "Accept request", class: "btn btn-success" %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
