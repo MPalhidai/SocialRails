@@ -4,9 +4,15 @@
   <div class="col-8">
     <h2>Profile</h2>
     <% if @profile.user_id == current_user.id %>
-      <%= link_to "Edit", edit_profile_path(current_user.id), class: "btn btn-outline-success" %>
+      <%= link_to "Edit", edit_profile_path(@profile), class: "btn btn-outline-success" %>
     <% end %>
-    <p> <%= @profile.avatar %> </p>
+    <div>
+      <% unless @profile.avatar.attached? %>
+        <%= image_tag gravatar_url(@profile.user.email, 300), alt: "default img" %>
+      <% else %>
+        <%= image_tag(@profile.profile_pic)%>
+      <% end %>
+    </div>
     <p> First name: <%= @profile.user.first_name %> </p>
     <p> Last name: <%= @profile.user.last_name %> </p>
     <#% if @profile.user.friends.include?(current_user.id) %>

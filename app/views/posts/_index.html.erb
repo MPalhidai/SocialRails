@@ -6,7 +6,7 @@
       <div class="post-show my-3">
         <p>
           <%#= image_tag post.user.profile.avatar %>
-          <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user_id) %>
+          <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user.profile) %>
         </p>
         <p>
           <%= post.content %>
@@ -22,7 +22,7 @@
           <div class="comment-show pl-5">
             <p>
               <%#= image_tag comment.user.profile.avatar %>
-              <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user_id) %>
+              <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user.profile) %>
             </p>
             <p>
               <%= comment.content %>
