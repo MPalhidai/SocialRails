@@ -3,35 +3,56 @@
     <h2>Network posts</h2>
     <div class="post-list">
     <% @posts.reverse.each do |post| %>
-      <div class="post-show my-3">
-        <p>
-          <%#= image_tag post.user.profile.avatar %>
-          <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user.profile) %>
-        </p>
-        <p>
-          <%= post.content %>
-          <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>">
-            reply
-          </a>
-        </p>
-        <div class="collapse" id="post_<%= post.id %>">
-          <%= render 'comments/new', post: post %>
-        </div>
-        <div class="comment-list">
-        <% post.comments.each do |comment| %>
-          <div class="comment-show pl-5">
-            <p>
-              <%#= image_tag comment.user.profile.avatar %>
-              <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user.profile) %>
-            </p>
-            <p>
-              <%= comment.content %>
-              <% if comment.user_id == current_user.id %>
-                <%= link_to "remove comment", comment_path(comment.id), method: :delete %>
-              <% end %>
-            </p>
+      <div class="row post-show my-3 py-3">
+        <div class="col-12">
+          <div class="tiny-pic">
+            <% unless post.user.profile.avatar.attached? %>
+              <%= image_tag gravatar_url(post.user.profile.user.email, 300), alt: "default img", class: "img-fluid rounded" %>
+            <% else %>
+              <%= image_tag post.user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
+            <% end %>
           </div>
-        <% end %>
+          <p>
+            <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user.profile) %>
+            <% if post.user_id == current_user.id %>
+              <%= link_to post_path(post.id), method: :delete do %>
+                <%= fa_icon "trash", base: "square", text: "delete post" %>
+              <% end %>
+            <% end %>
+          </p>
+          <p>
+            <%= post.content %>
+            <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>">
+              <%= fa_icon "comment", base: "square", text: "comment" %>
+            </a>
+          </p>
+          <div class="collapse" id="post_<%= post.id %>">
+            <%= render 'comments/new', post: post %>
+          </div>
+          <div class="comment-list">
+          <% post.comments.each do |comment| %>
+            <div class="comment-show pl-5">
+              <div class="tiny-pic">
+                <% unless comment.user.profile.avatar.attached? %>
+                  <%= image_tag gravatar_url(comment.user.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
+                <% else %>
+                  <%= image_tag comment.user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
+                <% end %>
+              </div>
+              <p>
+                <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user.profile) %>
+              </p>
+              <p>
+                <%= comment.content %>
+                <% if comment.user_id == current_user.id %>
+                  <%= link_to comment_path(comment.id), method: :delete do %>
+                    <%= fa_icon "trash", base: "square", text: "delete comment" %>
+                  <% end %>
+                <% end %>
+              </p>
+            </div>
+          <% end %>
+          </div>
         </div>
       </div>
     <% end %>
