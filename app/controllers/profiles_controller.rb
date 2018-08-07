@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
   def update
     if profile.update_attributes(profile_params)
       flash[:success] = "You have successfully edited your profile."
-      redirect_to profile_path
+      redirect_to @profile
     else
       flash[:notice] = "Something went wrong saving your changes."
       render :edit
@@ -21,11 +21,11 @@ class ProfilesController < ApplicationController
 
   private
 
-  def profile_params #add ability to change first_name, last_name, email, avatar
-    params.require(:profile).permit(:birthday, :gender, :location, :avatar)
+  def profile_params #add ability to change first_name, last_name, email, birthday
+    params.require(:profile).permit(:gender, :location, :avatar)
   end
 
   def profile
-    @profile ||= User.find(params[:id]).profile
+    @profile ||= Profile.find(params[:id])
   end
 end

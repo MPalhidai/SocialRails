@@ -1,2 +1,19 @@
-<h1>Profiles#show</h1>
-<p>Find me in app/views/profiles/show.html.erb</p>
+<% provide(:title, "Profile") %>
+
+<div class="row justify-content-center">
+  <div class="col-8">
+    <h2>Profile</h2>
+    <% if @profile.user_id == current_user.id %>
+      <%= link_to "Edit", edit_profile_path(current_user.id), class: "btn btn-outline-success" %>
+    <% end %>
+    <p> <%= @profile.avatar %> </p>
+    <p> First name: <%= @profile.user.first_name %> </p>
+    <p> Last name: <%= @profile.user.last_name %> </p>
+    <#% if @profile.user.friends.include?(current_user.id) %>
+      <p> Email: <%= @profile.user.email %> </p>
+      <p> Gender: <%= @profile.gender %> </p>
+      <p> Location: <%= @profile.location %> </p>
+      <p> Birthday: <%= @profile.user.birthday %> </p>
+    <#% end %>
+  </div>
+</div>
