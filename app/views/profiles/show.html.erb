@@ -1,35 +1,44 @@
 <% provide(:title, "Profile") %>
 
 <div class="row justify-content-center py-5">
-  <div class="col-8">
-    <h2>Profile</h2>
-    <% if @profile.user_id == current_user.id %>
-      <%= link_to "Edit", edit_profile_path(@profile), class: "btn btn-success" %>
-    <% elsif !Friend.find_by(requesting_id_id: current_user.id, requested_id_id: @profile.user.id, approve: true) %>
-
-      <%= form_for Friend.create(@friend) do |f| %>
-        <%= f.hidden_field :requesting_id_id, value: current_user.id %>
-        <%= f.hidden_field :requested_id_id, value: @profile.user.id %>
-        <%= f.button "Send a friend request", class: 'btn btn-success' %>
-      <% end %>
-
-
-    <% end %>
-    <div>
-      <% unless @profile.avatar.attached? %>
-        <%= image_tag gravatar_url(@profile.user.email, 300), alt: "default img" %>
-      <% else %>
-        <%= image_tag(@profile.profile_pic)%>
-      <% end %>
+  <div class="col-lg-8 col-md-10">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-6">
+        <h2>Profile</h2>
+      </div>
+      <div class="col-6 text-right">
+        <% if @profile.user_id == current_user.id %>
+          <%= link_to "Edit", edit_profile_path(@profile), class: "btn btn-success" %>
+        <% elsif !Friend.find_by(requesting_id_id: current_user.id, requested_id_id: @profile.user.id, approve: true) %>
+          <%= form_for Friend.create(@friend) do |f| %>
+            <%= f.hidden_field :requesting_id_id, value: current_user.id %>
+            <%= f.hidden_field :requested_id_id, value: @profile.user.id %>
+            <%= f.button "Send a friend request", class: 'btn btn-success' %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
-    <p> First name: <%= @profile.user.first_name %> </p>
-    <p> Last name: <%= @profile.user.last_name %> </p>
-    <% if Friend.find_by(requesting_id_id: current_user.id, requested_id_id: @profile.user.id, approve: true) %>
-      <p> Email: <%= @profile.user.email %> </p>
-      <p> Gender: <%= @profile.gender %> </p>
-      <p> Location: <%= @profile.location %> </p>
-      <p> Birthday: <%= @profile.user.birthday %> </p>
-    <% end %>
+    <div class="row justify-content-between py-5">
+      <div class="col-6">
+        <div>
+          <% unless @profile.avatar.attached? %>
+            <%= image_tag gravatar_url(@profile.user.email, 300), alt: "default img" %>
+          <% else %>
+            <%= image_tag(@profile.profile_pic)%>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-6">
+        <p> First name: <%= @profile.user.first_name %> </p>
+        <p> Last name: <%= @profile.user.last_name %> </p>
+        <% if current_user.id == @profile.user.id or Friend.find_by(requesting_id_id: current_user.id, requested_id_id: @profile.user.id, approve: true) %>
+          <p> Email: <%= @profile.user.email %> </p>
+          <p> Gender: <%= @profile.gender %> </p>
+          <p> Location: <%= @profile.location %> </p>
+          <p> Birthday: <%= @profile.user.birthday %> </p>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
