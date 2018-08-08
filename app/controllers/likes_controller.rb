@@ -4,13 +4,20 @@ class LikesController < ApplicationController
 
   def create
     @like = current_user.likes.build(like_params)
-    flash[:notice] = "Something went wrong." unless @like.save
+    if @like.save
+      flash[:success] = "You liked #{@like.user.first_name}'s #{@like.liked_type.downcase}"
+    else
+      flash[:notice] = "Something went wrong."
+    end
     redirect_to request.referrer
   end
 
   def destroy
-    @like = Like.find(params[:id]).destroy
-    flash[:notice] = "Something went wrong." unless @like.save
+    if like.destroy
+      flash[:success] = "You unliked #{@like.user.first_name}'s #{@like.liked_type.downcase}"
+    else
+      flash[:notice] = "Something went wrong."
+    end
     redirect_to request.referrer
   end
 
@@ -18,5 +25,9 @@ class LikesController < ApplicationController
 
   def like_params
     params.require(:like).permit(:user_id, :liked_id, :liked_type)
+  end
+
+  def like
+    @like ||= Like.find(params[:id])
   end
 end
