@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-8">
+  <div class="col-lg-8 col-md-10">
     <h2 class="m-0 py-4">Network posts</h2>
     <div class="post-list">
     <% @posts.reverse.each do |post| %>
@@ -26,27 +26,21 @@
               <% end %>
             </div>
           </div>
-          <p class="post-body py-3 mb-0">
+          <div class="post-body py-3 mb-0 d-inline-flex">
             <%= post.content %>
-            <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>">
+            <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>" class="mx-2">
               <%= fa_icon "comment" %>
-              <%= post.comments.length %>
             </a>
-
-
-            <%= form_for current_user.likes.build(@like) do |f| %>
+            <%= post.comments.length %>
+            <%= form_for current_user.likes.build(@like), id: "button_to_link" do |f| %>
               <%= f.hidden_field :liked_type, value: "Post" %>
               <%= f.hidden_field :liked_id, value: post.id %>
-              <%= f.submit "Like", class: "form-control btn btn-success" %>
+              <%= f.button class: 'btn btn-link p-0 mx-2' do %>
+                <%= fa_icon "thumbs-up" %>
+              <% end %>
             <% end %>
-
-            
-
-            <%= link_to likes_path(liked_type: "post", liked_id: post.id), method: :create do %>
-              <%= fa_icon "thumbs-up" %>
-              <%= post.likes.length %>
-            <% end %>
-          </p>
+            <%= post.likes.length %>
+          </div>
           <div class="collapse" id="post_<%= post.id %>">
             <%= render 'comments/new', post: post %>
           </div>

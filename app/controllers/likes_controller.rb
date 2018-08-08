@@ -4,11 +4,7 @@ class LikesController < ApplicationController
 
   def create
     @like = current_user.likes.build(like_params)
-    if @like.save
-      flash[:notice] = "You liked a #{@like.liked_type}"
-    else
-      flash[:notice] = "Something went wrong."
-    end
+    flash[:notice] = "Something went wrong." unless @like.save
     redirect_to request.referrer
   end
 
