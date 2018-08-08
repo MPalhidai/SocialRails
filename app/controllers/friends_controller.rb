@@ -4,10 +4,10 @@ class FriendsController < ApplicationController
   # think about an index to show all friend requests
 
   def create
-    @friend = current_user.friends.build(friend_params)
-    if @friend.save
+    @friend = Friend.create(friend_params)
+    if @friend
       flash[:success] = "You have successfully made a friend request."
-      redirect_to users_friends_path
+      redirect_to users_friends_path(current_user.id)
     else
       flash[:notice] = "Something went wrong sending your friend request."
       redirect_to users_path
@@ -15,8 +15,7 @@ class FriendsController < ApplicationController
   end
 
   def destroy
-    friend.destroy
-    if @friend.save
+    if friend.destroy
       flash[:success] = "You have deleted your friend request."
     else
       flash[:notice] = "Something went wrong deleting your friend request."
@@ -40,7 +39,7 @@ class FriendsController < ApplicationController
     params.require(:friend).permit(:requesting_id, :requested_id)
   end
 
-  def friend #keep for edit
+  def friend
     @friend ||= Friend.find(params[:id])
   end
 

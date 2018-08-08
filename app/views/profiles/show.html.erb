@@ -1,10 +1,19 @@
 <% provide(:title, "Profile") %>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center py-5">
   <div class="col-8">
     <h2>Profile</h2>
     <% if @profile.user_id == current_user.id %>
-      <%= link_to "Edit", edit_profile_path(@profile), class: "btn btn-outline-success" %>
+      <%= link_to "Edit", edit_profile_path(@profile), class: "btn btn-success" %>
+    <% elsif !Friend.find_by(requesting_id_id: current_user.id, requested_id_id: @profile.user.id, approve: true) %>
+
+      <%= form_for Friend.create(@friend) do |f| %>
+        <%= f.hidden_field :requesting_id_id, value: current_user.id %>
+        <%= f.hidden_field :requested_id_id, value: @profile.user.id %>
+        <%= f.button "Send a friend request", class: 'btn btn-success' %>
+      <% end %>
+
+
     <% end %>
     <div>
       <% unless @profile.avatar.attached? %>
@@ -15,11 +24,15 @@
     </div>
     <p> First name: <%= @profile.user.first_name %> </p>
     <p> Last name: <%= @profile.user.last_name %> </p>
-    <#% if @profile.user.friends.include?(current_user.id) %>
+    <% if Friend.find_by(requesting_id_id: current_user.id, requested_id_id: @profile.user.id, approve: true) %>
       <p> Email: <%= @profile.user.email %> </p>
       <p> Gender: <%= @profile.gender %> </p>
       <p> Location: <%= @profile.location %> </p>
       <p> Birthday: <%= @profile.user.birthday %> </p>
-    <#% end %>
+    <% end %>
   </div>
 </div>
+
+<!-- somewhere in here make a friend request button if not already friends -->
+<!-- fix db column forgein keys, reset db, rollback friends table, change migration before to proper column names before reset -->
+<!-- add user reference to friends so I can build without passing requesting_id? -->

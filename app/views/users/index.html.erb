@@ -1,14 +1,22 @@
 <% provide(:title, "Find a friend") %>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center py-5">
   <div class="col-8">
     <h2>Find a friend</h2>
     <% @users.each do |user| %>
-      <div class="user-list">
-        <p>
-          <%#= image_tag user.profile.avatar %>
-          <%=link_to "#{user.first_name} #{user.last_name}", profile_path(user.id) %>
-        </p>
+      <div class="row py-3">
+        <div class="col-12 p-0 align-items-center d-flex user-list">
+          <div class="tiny-pic d-inline-flex">
+            <% unless user.profile.avatar.attached? %>
+              <%= image_tag gravatar_url(user.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
+            <% else %>
+              <%= image_tag user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
+            <% end %>
+          </div>
+          <p class="d-inline mx-3 mb-0">
+            <%=link_to "#{user.first_name} #{user.last_name}", profile_path(user.profile.id) %>
+          </p>
+        </div>
       </div>
     <% end %>
   </div>
