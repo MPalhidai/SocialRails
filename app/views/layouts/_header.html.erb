@@ -1,26 +1,39 @@
 <nav class="navbar navbar-dark bg-dark">
-  <div class="row justify-content-between w-100 m-0">
-    <div class="col-sm-4">
+  <div class="row justify-content-between align-items-center w-100 m-0">
+    <div class="col-4">
       <a class="navbar-brand" href="/">SocialRails</a>
     </div>
-    <div class="col-sm-6 text-right">
+    <div class="col-8 text-right">
       <% if user_signed_in? %>
-        <div class="btn-group">
-          <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-user"> <%= current_user.first_name %></i>
+        <div class="btn-group align-items-center">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle p-0 d-flex align-items-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="header-pic d-inline-flex">
+              <% unless current_user.profile.avatar.attached? %>
+                <%= image_tag gravatar_url(current_user.profile.user.email, 300), alt: "default image", class: "img-fluid circle" %>
+              <% else %>
+                <%= image_tag current_user.profile.profile_pic, alt: "avatar", class: "img-fluid circle" %>
+              <% end %>
+            </div>
+            <div class="user-button d-inline pl-2">
+              <%= current_user.first_name %>
+            </div>
           </button>
-          <div class="dropdown-menu dropdown-menu-right text-center">
-            <%= link_to "Home", root_path %>
-            <br/>
+          <%= link_to root_path, class: "pl-2" do %>
+            <%= fa_icon "home" %>
+          <% end %>
+          <%= link_to users_friends_path, class: "px-2" do %>
+            <%= fa_icon "users" %>
+          <% end %>
+          <%= link_to users_notifications_path, class: "pr-2" do %>
+            <%= fa_icon "bell" %>
+          <% end %>
+          <div class="dropdown-menu text-center">
             <%= link_to "Account", edit_user_registration_path %>
             <br/>
             <%= link_to "Profile", profile_path(current_user.profile) %>
             <br/>
-            <%= link_to "Friends", users_friends_path %>
+            <%= link_to "Find Friends", users_path %>
             <br/>
-            <%= link_to "Find new friends", users_path %>
-            <br/>
-            <%= link_to "Notifications", users_notifications_path %>
             <div class="dropdown-divider"></div>
             <%= link_to "Log Out", destroy_user_session_path, :method => "delete" %>
           </div>
