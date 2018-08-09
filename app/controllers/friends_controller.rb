@@ -7,10 +7,8 @@ class FriendsController < ApplicationController
     @friend = Friend.create(friend_params)
     if @friend
       flash[:success] = "You have successfully made a friend request."
-      redirect_to users_friends_path(current_user.id)
     else
       flash[:notice] = "Something went wrong sending your friend request."
-      redirect_to users_path
     end
   end
 

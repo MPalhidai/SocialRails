@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user! #possibly exclude friends to see friends of friends
 
-  def index #show all user list to find friends that are not already friends
+  def index #show all user list to find friends that are not already friends or self
     @users = User.all
   end
 
@@ -14,8 +14,8 @@ class UsersController < ApplicationController
     @notifications = current_user.notifications
   end
 
-  def my_friends #show all friends of current_user
-    @my_friends = current_user.friends
+  def friends
+    @friends = current_user.users_friends
   end
 
   private

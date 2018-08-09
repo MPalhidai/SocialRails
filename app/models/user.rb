@@ -15,5 +15,11 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, :email, :birthday, presence: true
 
+  def notifications
+    self.friend_requested.where(approve: false)
+  end
 
+  def users_friends
+    self.friend_requested.where(approve: true) and self.friend_requesting.where(approve: true)
+  end
 end
