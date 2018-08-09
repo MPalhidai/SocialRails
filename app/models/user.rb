@@ -15,11 +15,21 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, :email, :birthday, presence: true
 
-  def notifications
+  validate :validate_age
+
+  def users_notifications
     self.friend_requested.where(approve: false)
   end
 
   def users_friends
     self.friend_requested.where(approve: true) and self.friend_requesting.where(approve: true)
+  end
+
+  private
+
+  def validate_age
+    if birthday.present? && birthday > 18.years.ago.to_date
+      errors.add(:birthday, 'You must be over 18 years old.')
+    end
   end
 end

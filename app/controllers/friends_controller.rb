@@ -1,15 +1,13 @@
 class FriendsController < ApplicationController
-  before_action :authenticate_user!, exclude: [:create]
-  # before_action :authenticate_friend_requestor, exclude: [:create]
-  # think about an index to show all friend requests
 
   def create
     @friend = Friend.create(friend_params)
     if @friend
-      flash[:success] = "You have successfully made a friend request."
+      flash.now[:success] = "You have successfully made a friend request."
     else
-      flash[:notice] = "Something went wrong sending your friend request."
+      flash.now[:notice] = "Something went wrong sending your friend request."
     end
+    redirect_to friend_requests_path
   end
 
   def destroy
@@ -18,12 +16,11 @@ class FriendsController < ApplicationController
     else
       flash[:notice] = "Something went wrong deleting your friend request."
     end
-    redirect_to users_path
+    redirect_to friend_requests_path
   end
 
   def approve
-    friend.approve = true
-    if @friend.save
+    if friend.update_attribute(approve: true)
       flash[:success] = "You are now friends!"
     else
       flash[:notice] = "Something went wrong approving your friend request."
@@ -39,11 +36,5 @@ class FriendsController < ApplicationController
 
   def friend
     @friend ||= Friend.find(params[:id])
-  end
-
-  def authenticate_friend_requestor
-    unless Friend.find(params[:id]).requesting_id == current_user.id
-      flash[:notice] = 'You can not edit this friendship'
-    end
   end
 end

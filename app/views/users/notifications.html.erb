@@ -2,27 +2,27 @@
   <div class="col-lg-8 col-md-10">
     <h2>Notifications</h2>
     <% if @notifications.empty? %>
-      <h6>No new notifications</h6>
+      <h6 class="py-5">No new notifications</h6>
     <% else %>
       <% @notifications.each do |notification| %>
         <div class="row py-3">
           <div class="col-12 p-0 align-items-center d-flex user-list">
             <div class="tiny-pic d-inline-flex">
-              <% unless user.profile.avatar.attached? %>
-                <%= image_tag gravatar_url(user.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
+              <% unless notification.requesting.profile.avatar.attached? %>
+                <%= image_tag gravatar_url(notification.requesting.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
               <% else %>
-                <%= image_tag user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
+                <%= image_tag notification.requesting.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
               <% end %>
             </div>
             <p class="d-inline mx-3 mb-0">
-              <%=link_to "#{requesting.first_name} #{requesting.last_name}", profile_path(requesting.id) %>
+              <%=link_to "#{notification.requesting.first_name} #{notification.requesting.last_name}", profile_path(notification.requesting.id) %>
               would like to be friends
             </p>
+            <%= form_for notification, method: :approve do |send| %>
+              <%= send.button "Accept request", class: "btn btn-success mx-2" %>
+            <% end %>
             <%= form_for notification, method: :delete do |send| %>
               <%= send.button "Delete request", class: "btn btn-danger" %>
-            <% end %>
-            <%= form_for notification, method: :approve do |send| %>
-              <%= send.button "Accept request", class: "btn btn-success" %>
             <% end %>
           </div>
         </div>

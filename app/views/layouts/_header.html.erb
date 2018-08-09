@@ -21,10 +21,10 @@
           <%= link_to root_path, class: "pl-2" do %>
             <%= fa_icon "home" %>
           <% end %>
-          <%= link_to users_friends_path, class: "px-2" do %>
+          <%= link_to my_friends_path(current_user.id), class: "px-2" do %>
             <%= fa_icon "users" %>
           <% end %>
-          <%= link_to users_notifications_path, class: "pr-2" do %>
+          <%= link_to friend_requests_path(current_user.id), class: "pr-2" do %>
             <%= fa_icon "bell" %>
           <% end %>
           <div class="dropdown-menu text-center">

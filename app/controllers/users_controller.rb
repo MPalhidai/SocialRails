@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def notifications
-    @notifications = current_user.notifications
+    @notifications = current_user.users_notifications
   end
 
   def friends
