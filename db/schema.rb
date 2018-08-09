@@ -47,13 +47,13 @@ ActiveRecord::Schema.define(version: 2018_07_30_231107) do
   end
 
   create_table "friends", force: :cascade do |t|
-    t.bigint "requesting_id_id"
-    t.bigint "requested_id_id"
-    t.boolean "approve"
+    t.bigint "requesting_id"
+    t.bigint "requested_id"
+    t.boolean "approve", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["requested_id_id"], name: "index_friends_on_requested_id_id"
-    t.index ["requesting_id_id"], name: "index_friends_on_requesting_id_id"
+    t.index ["requested_id"], name: "index_friends_on_requested_id"
+    t.index ["requesting_id"], name: "index_friends_on_requesting_id"
   end
 
   create_table "likes", force: :cascade do |t|
