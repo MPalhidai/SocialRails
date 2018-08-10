@@ -21,8 +21,14 @@ class User < ApplicationRecord
     self.friend_requested.where(approve: false)
   end
 
-  def users_friends
-    self.friend_requesting.where(approve: true) + self.friend_requested.where(approve: true)
+  def users_friends #I can also change the output of this to the Users of the uniq IDs in these Friend tables. A SQL select query might be easier. select * from User where
+    i_approved = "SELECT requesting_id FROM friends WHERE requested_id = :user_id AND approve = true"
+		you_approved = "SELECT requested_id FROM friends WHERE requesting_id = :user_id AND approve = true"
+		User.where("id IN (#{i_approved}) OR id IN (#{you_approved})", user_id: self.id)
+  end
+
+  def not_friends_yet
+    User.where("id NOT IN (#{users_friends})")
   end
 
   private

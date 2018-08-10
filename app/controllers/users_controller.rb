@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticate_user! #possibly exclude friends to see friends of friends
 
-  def index #show all user list to find friends that are not already friends or self
-    @users = User.all
+  def index #works very verbose to take out current user
+    @users = User.all - User.where(id: current_user.id) - friends
   end
 
   def show #show current_user timeline of all posts made by current_user and friends
