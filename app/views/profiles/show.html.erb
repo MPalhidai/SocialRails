@@ -9,7 +9,7 @@
       <div class="col-6 text-right">
         <% if @profile.user_id == current_user.id %>
           <%= link_to "Edit", edit_profile_path(@profile), class: "btn btn-success" %>
-        <% elsif !Friend.find_by(requesting_id: current_user.id, requested_id: @profile.user.id, approve: true) %>
+        <% elsif !Friend.find_by(requesting_id: current_user.id, requested_id: @profile.user.id, approve: true) and !Friend.find_by(requesting_id: @profile.user.id, requested_id: current_user.id, approve: true) %>
           <%= form_for Friend.create(@friend) do |f| %>
             <%= f.hidden_field :requesting_id, value: current_user.id %>
             <%= f.hidden_field :requested_id, value: @profile.user.id %>
@@ -31,7 +31,7 @@
       <div class="col-6">
         <p> First name: <%= @profile.user.first_name %> </p>
         <p> Last name: <%= @profile.user.last_name %> </p>
-        <% if current_user.id == @profile.user.id or Friend.find_by(requesting_id: current_user.id, requested_id: @profile.user.id, approve: true) %>
+        <% if current_user.id == @profile.user.id or Friend.find_by(requesting_id: current_user.id, requested_id: @profile.user.id, approve: true) or Friend.find_by(requesting_id: @profile.user.id, requested_id: current_user.id, approve: true) %>
           <p> Email: <%= @profile.user.email %> </p>
           <p> Gender: <%= @profile.gender %> </p>
           <p> Location: <%= @profile.location %> </p>
@@ -41,7 +41,3 @@
     </div>
   </div>
 </div>
-
-<!-- somewhere in here make a friend request button if not already friends -->
-<!-- fix db column forgein keys, reset db, rollback friends table, change migration before to proper column names before reset -->
-<!-- add user reference to friends so I can build without passing requesting_id? -->
