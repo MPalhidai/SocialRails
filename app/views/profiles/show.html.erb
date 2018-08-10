@@ -9,7 +9,7 @@
       <div class="col-6 text-right">
         <% if @profile.user_id == current_user.id %>
           <%= link_to "Edit", edit_profile_path(@profile), class: "btn btn-success" %>
-        <% elsif !Friend.find_by(requesting_id: current_user.id, requested_id: @profile.user.id, approve: true) and !Friend.find_by(requesting_id: @profile.user.id, requested_id: current_user.id, approve: true) %>
+        <% elsif !Friend.find_by(requesting_id: current_user.id, requested_id: @profile.user.id) and !Friend.find_by(requesting_id: @profile.user.id, requested_id: current_user.id) %>
           <%= form_for Friend.create(@friend) do |f| %>
             <%= f.hidden_field :requesting_id, value: current_user.id %>
             <%= f.hidden_field :requested_id, value: @profile.user.id %>

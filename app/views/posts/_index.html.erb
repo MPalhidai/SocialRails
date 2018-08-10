@@ -2,106 +2,112 @@
   <div class="col-lg-8 col-md-10">
     <h2 class="m-0 py-4">Network posts</h2>
     <div class="post-list">
-    <% @posts.reverse.each do |post| %>
-      <div class="row post-show my-3 py-3">
-        <div class="col-12">
-          <div class="row post-header justify-content-around align-items-center">
-            <div class="col-6 p-0 align-items-center d-flex">
-              <div class="tiny-pic d-inline-flex">
-                <% unless post.user.profile.avatar.attached? %>
-                  <%= image_tag gravatar_url(post.user.profile.user.email, 300), alt: "default img", class: "img-fluid rounded" %>
-                <% else %>
-                  <%= image_tag post.user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
-                <% end %>
-              </div>
-              <div class="d-inline mx-3">
-                <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user.profile) %>
-              </div>
-            </div>
-            <div class="col-6 text-right">
-              <% if post.user_id == current_user.id %>
-                <%= link_to post_path(post.id), method: :delete do %>
-                  <%= fa_icon "trash", text: "delete post" %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-          <div class="post-body py-3 mb-0 d-inline-flex">
-            <%= post.content %>
-            <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>" class="mx-2">
-              <%= fa_icon "comment" %>
-            </a>
-            <%= post.comments.length %>
-            <% if current_user.likes.find_by(liked_id: post.id, liked_type: "Post") %>
-              <div class="d-inline mx-2">
-                <%= link_to like_path(current_user.likes.find_by(liked_id: post.id, liked_type: "Post").id), method: :delete do %>
-                  <%= fa_icon "thumbs-down" %>
-                <% end %>
-              </div>
-            <% else %>
-              <%= form_for current_user.likes.build(@like) do |f| %>
-                <%= f.hidden_field :liked_type, value: "Post" %>
-                <%= f.hidden_field :liked_id, value: post.id %>
-                <%= f.button class: 'btn btn-link p-0 mx-2' do %>
-                  <%= fa_icon "thumbs-up" %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <%= post.likes.length %>
-          </div>
-          <div class="collapse pb-3" id="post_<%= post.id %>">
-            <%= render 'comments/new', post: post %>
-          </div>
-          <div class="comment-list">
-          <% post.comments.each do |comment| %>
-            <div class="row comment-show pl-5">
-              <div class="col-12 p-0">
-                <div class="row comment-header justify-content-around align-items-center">
-                  <div class="col-6 p-0 align-items-center d-flex">
-                    <div class="tiny-pic d-inline-flex">
-                      <% unless comment.user.profile.avatar.attached? %>
-                        <%= image_tag gravatar_url(comment.user.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
-                      <% else %>
-                        <%= image_tag comment.user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
-                      <% end %>
-                    </div>
-                    <div class="d-inline mx-3">
-                      <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user.profile) %>
-                    </div>
-                  </div>
-                  <div class="col-6 text-right">
-                    <% if comment.user_id == current_user.id %>
-                      <%= link_to comment_path(comment.id), method: :delete do %>
-                        <%= fa_icon "trash", text: "delete comment" %>
-                      <% end %>
+      <% if @posts.empty? %>
+        <div class="py-5">
+          <%= link_to "Make a post and start networking", users_path %>
+        </div>
+      <% else %>
+        <% @posts.reverse.each do |post| %>
+          <div class="row post-show my-3 py-3">
+            <div class="col-12">
+              <div class="row post-header justify-content-around align-items-center">
+                <div class="col-6 p-0 align-items-center d-flex">
+                  <div class="tiny-pic d-inline-flex">
+                    <% unless post.user.profile.avatar.attached? %>
+                      <%= image_tag gravatar_url(post.user.profile.user.email, 300), alt: "default img", class: "img-fluid rounded" %>
+                    <% else %>
+                      <%= image_tag post.user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
                     <% end %>
                   </div>
+                  <div class="d-inline mx-3">
+                    <%= link_to "#{post.user.first_name} #{post.user.last_name}", profile_path(post.user.profile) %>
+                  </div>
                 </div>
-                <div class="comment-body py-3 mb-0 d-inline-flex">
-                  <%= comment.content %>
-                  <% if current_user.likes.find_by(liked_id: comment.id, liked_type: "Comment") %>
-                    <div class="d-inline mx-2">
-                      <%= link_to like_path(current_user.likes.find_by(liked_id: comment.id, liked_type: "Comment").id), method: :delete do %>
-                        <%= fa_icon "thumbs-down" %>
-                      <% end %>
-                    </div>
-                  <% else %>
-                    <%= form_for current_user.likes.build(@like) do |f| %>
-                      <%= f.hidden_field :liked_type, value: "Comment" %>
-                      <%= f.hidden_field :liked_id, value: comment.id %>
-                      <%= f.button class: 'btn btn-link p-0 mx-2' do %>
-                        <%= fa_icon "thumbs-up" %>
-                      <% end %>
+                <div class="col-6 text-right">
+                  <% if post.user_id == current_user.id %>
+                    <%= link_to post_path(post.id), method: :delete do %>
+                      <%= fa_icon "trash", text: "delete post" %>
                     <% end %>
                   <% end %>
-                  <%= comment.likes.length %>
                 </div>
               </div>
+              <div class="post-body py-3 mb-0 d-inline-flex">
+                <%= post.content %>
+                <a data-toggle="collapse" href="#post_<%= post.id %>" role="button" aria-expanded="false" aria-controls="post_<%= post.id %>" class="mx-2">
+                  <%= fa_icon "comment" %>
+                </a>
+                <%= post.comments.length %>
+                <% if current_user.likes.find_by(liked_id: post.id, liked_type: "Post") %>
+                  <div class="d-inline mx-2">
+                    <%= link_to like_path(current_user.likes.find_by(liked_id: post.id, liked_type: "Post").id), method: :delete do %>
+                      <%= fa_icon "thumbs-down" %>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <%= form_for current_user.likes.build(@like) do |f| %>
+                    <%= f.hidden_field :liked_type, value: "Post" %>
+                    <%= f.hidden_field :liked_id, value: post.id %>
+                    <%= f.button class: 'btn btn-link p-0 mx-2' do %>
+                      <%= fa_icon "thumbs-up" %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <%= post.likes.length %>
+              </div>
+              <div class="collapse pb-3" id="post_<%= post.id %>">
+                <%= render 'comments/new', post: post %>
+              </div>
+              <div class="comment-list">
+              <% post.comments.each do |comment| %>
+                <div class="row comment-show pl-5">
+                  <div class="col-12 p-0">
+                    <div class="row comment-header justify-content-around align-items-center">
+                      <div class="col-6 p-0 align-items-center d-flex">
+                        <div class="tiny-pic d-inline-flex">
+                          <% unless comment.user.profile.avatar.attached? %>
+                            <%= image_tag gravatar_url(comment.user.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
+                          <% else %>
+                            <%= image_tag comment.user.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
+                          <% end %>
+                        </div>
+                        <div class="d-inline mx-3">
+                          <%= link_to "#{comment.user.first_name} #{comment.user.last_name}", profile_path(comment.user.profile) %>
+                        </div>
+                      </div>
+                      <div class="col-6 text-right">
+                        <% if comment.user_id == current_user.id %>
+                          <%= link_to comment_path(comment.id), method: :delete do %>
+                            <%= fa_icon "trash", text: "delete comment" %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="comment-body py-3 mb-0 d-inline-flex">
+                      <%= comment.content %>
+                      <% if current_user.likes.find_by(liked_id: comment.id, liked_type: "Comment") %>
+                        <div class="d-inline mx-2">
+                          <%= link_to like_path(current_user.likes.find_by(liked_id: comment.id, liked_type: "Comment").id), method: :delete do %>
+                            <%= fa_icon "thumbs-down" %>
+                          <% end %>
+                        </div>
+                      <% else %>
+                        <%= form_for current_user.likes.build(@like) do |f| %>
+                          <%= f.hidden_field :liked_type, value: "Comment" %>
+                          <%= f.hidden_field :liked_id, value: comment.id %>
+                          <%= f.button class: 'btn btn-link p-0 mx-2' do %>
+                            <%= fa_icon "thumbs-up" %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                      <%= comment.likes.length %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+              </div>
             </div>
-          <% end %>
           </div>
-        </div>
-      </div>
+        <% end %>
     <% end %>
     </div>
   </div>
