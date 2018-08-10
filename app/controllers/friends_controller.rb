@@ -1,13 +1,12 @@
 class FriendsController < ApplicationController
 
   def create
-    @friend = Friend.create(friend_params)
-    if @friend
-      flash.now[:success] = "You have successfully made a friend request."
+    if Friend.create(friend_params)
+      flash[:success] = "You have successfully made a friend request."
     else
-      flash.now[:notice] = "Something went wrong sending your friend request."
+      flash[:notice] = "Something went wrong sending your friend request."
     end
-    redirect_to friend_requests_path
+    redirect_to request.referrer
   end
 
   def destroy
@@ -16,16 +15,17 @@ class FriendsController < ApplicationController
     else
       flash[:notice] = "Something went wrong deleting your friend request."
     end
-    redirect_to friend_requests_path
+    redirect_to request.referrer
   end
 
   def approve
-    if friend.update_attribute(approve: true)
+    friend.approve = true
+    if @friend.save
       flash[:success] = "You are now friends!"
     else
       flash[:notice] = "Something went wrong approving your friend request."
     end
-    redirect_to notifications_path
+    redirect_to request.referrer
   end
 
   private

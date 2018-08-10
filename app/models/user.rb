@@ -22,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def users_friends
-    self.friend_requested.where(approve: true) and self.friend_requesting.where(approve: true)
+    self.friend_requesting.where(approve: true) + self.friend_requested.where(approve: true)
   end
 
   private

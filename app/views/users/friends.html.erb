@@ -7,17 +7,18 @@
       </div>
     <% else %>
       <% @friends.each do |friend| %>
+      <% friend.requesting.id == current_user.id ? show_friend = friend.requested : show_friend = friend.requesting %>
       <div class="row py-3">
         <div class="col-12 p-0 align-items-center d-flex user-list">
           <div class="tiny-pic d-inline-flex">
-            <% unless friend.profile.avatar.attached? %>
-              <%= image_tag gravatar_url(friend.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
+            <% unless show_friend.profile.avatar.attached? %>
+              <%= image_tag gravatar_url(show_friend.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
             <% else %>
-              <%= image_tag friend.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
+              <%= image_tag show_friend.profile.profile_pic, alt: "avatar", class: "img-fluid rounded" %>
             <% end %>
           </div>
           <p class="d-inline mx-3 mb-0">
-            <%= link_to "#{friend.first_name} #{friend.last_name}", profile_path(friend.profile.id) %>
+            <%= link_to "#{show_friend.first_name} #{show_friend.last_name}", profile_path(show_friend.profile.id) %>
           </p>
         </div>
       </div>
