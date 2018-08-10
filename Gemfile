@@ -30,6 +30,7 @@ gem 'devise', '~> 4.2'
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
+gem 'omniauth-facebook'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'

@@ -1,12 +1,12 @@
-<div class="row justify-content-center  py-5">
+<div class="row justify-content-center py-5">
   <div class="col-lg-8 col-md-10">
     <h2>Notifications</h2>
     <% if @notifications.empty? %>
       <h6 class="py-5">No new notifications</h6>
     <% else %>
       <% @notifications.each do |notification| %>
-        <div class="row py-3">
-          <div class="col-12 p-0 align-items-center d-flex user-list">
+        <div class="row justify-content-between align-items-center py-3">
+          <div class="col-6 p-0 align-items-center d-flex user-list">
             <div class="tiny-pic d-inline-flex">
               <% unless notification.requesting.profile.avatar.attached? %>
                 <%= image_tag gravatar_url(notification.requesting.profile.user.email, 300), alt: "default image", class: "img-fluid rounded" %>
@@ -18,6 +18,8 @@
               <%=link_to "#{notification.requesting.first_name} #{notification.requesting.last_name}", profile_path(notification.requesting.id) %>
               would like to be friends
             </p>
+          </div>
+          <div class="col-6 d-inline-flex justify-content-end">
             <%= form_for notification, method: :approve do |send| %>
               <%= send.button "Accept request", class: "btn btn-success mx-2" %>
             <% end %>
