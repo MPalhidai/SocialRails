@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :users, :only => [:index, :show]
-
-
   resources :posts, :only => [:new, :create, :show, :destroy] #maybe all if editable
   resources :comments, :only => [:new, :create, :destroy] #maybe all if editable
   resources :profiles, :only => [:edit, :update, :show]
