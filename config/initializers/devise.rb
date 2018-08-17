@@ -259,7 +259,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
-  config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "http://localhost:3000/users/auth/facebook/callback"
+  config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "https://social-network-on-rails.herokuapp.com/users/auth/facebook/callback"
 
 
   # ==> Warden configuration
