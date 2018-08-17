@@ -8,7 +8,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = 'da217412e37c57afdeed4a91ab8d7a25617a07bf985efa06ae18dbb73a1a8e1e06ffd3cd63f78243c8bf6a36989d17a1a260a663bec19296d87bfed14976de67'
+  # config.secret_key = 'da217412e37c57afdeed4a91ab8d7a25617a07bf985efa06ae18dbb73a1a8e1e06ffd3cd63f78243c8bf6a36989d17a1a260a663bec19296d87bfed14976de67'
   # not very secret
 
   # ==> Controller configuration
@@ -137,7 +137,7 @@ Devise.setup do |config|
   # their account can't be confirmed with the token any more.
   # Default is nil, meaning there is no restriction on how long a user can take
   # before confirming their account.
-  config.confirm_within = 1.days
+  config.confirm_within = 3.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
@@ -150,7 +150,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  config.remember_for = 1.weeks
+  config.remember_for = 2.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -190,7 +190,7 @@ Devise.setup do |config|
   # :time  = Re-enables login after a certain amount of time (see :unlock_in below)
   # :both  = Enables both strategies
   # :none  = No unlock strategy. You should handle unlocking by yourself.
-  config.unlock_strategy = :both
+  config.unlock_strategy = :email
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
@@ -258,10 +258,11 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-
-  config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "https://social-network-on-rails.herokuapp.com/users/auth/facebook/callback"
-
-
+  if Rails.env.production?
+    config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "https://social-network-on-rails.herokuapp.com/users/auth/facebook/callback"
+  else
+    config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "https://localhost:3000/users/auth/facebook/callback"
+  end
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
