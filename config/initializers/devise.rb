@@ -258,11 +258,11 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
-  if Rails.env.production?
-    config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "https://social-network-on-rails.herokuapp.com/users/auth/facebook/callback"
-  else
-    config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "https://localhost:3000/users/auth/facebook/callback"
-  end
+  # if Rails.env.production?
+  #   config.omniauth :facebook, Socialrails::Application.credentials.FACEBOOK_APP_ID, Socialrails::Application.credentials.FACEBOOK_APP_SECRET, callback_url: "https://social-network-on-rails.herokuapp.com/users/auth/facebook/callback"
+  # else
+  config.omniauth :facebook, Socialrails::Application.credentials.facebook[:APP_ID], Socialrails::Application.credentials.facebook[:APP_SECRET], callback_url: "http://localhost:3000/users/auth/facebook/callback"
+  # end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
