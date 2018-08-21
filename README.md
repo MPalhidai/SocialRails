@@ -1,78 +1,36 @@
 # README
 
-https://microverse.pathwright.com/library/fast-track-curriculum/69047/path/step/40298864/
+SocialRails is inspired by Facebook. Users can sign up, post, comment, like, and add friends. This site is built with Ruby on Rails, Bootstrap, Font Awesome, and Devise. If you want to get in touch with the creator please follow one of the links in the footer.
 
-https://www.theodinproject.com/courses/ruby-on-rai...
+Created by
+Michael Palhidai
 
-# Note:
+# Future Features:
 
-1. Skip point 16 about setting up a mailer - you will be able to do it if you complete extra task in next steps (which is optional).
+1. Make posts also allow images (either just via a URL or, more complicated, by uploading one)
 
-2. According to requirements first you should:
+2. Make nav-bar bell change colors when you have a notification and display the number of notifications
 
-  a. "Think through the data architecture required to make this work. There are a lot of models and a lot of associations, so take the time to plan out your approach."
+3. Make the notifications page a partial and dropdown on top of the post index page
 
-  b. Please prepare some documentation (e.g.  Entity Relationship Diagram or mockups) and review it with your mentor before writing any code (send link to review guidelines to your mentor)
+4. Make the flash alerts position absolute so it doesn't push other elements down
 
-3. Once you've decided that part of the project is ready, your mentor will review it. For that:
+5. Add paginate to all lists (network posts / find friends / notifications)
 
-  a. Get the link of your Pull Request/Merge Request
+6. Make friends page a partial that sits in the bottom right column
 
-  b. Copy this link and send it to your mentor along with the link to your Pull Request/Merge Request (you can't see this doc, but your mentor can).
+7. Add OmniAuth Facebook to production environment and turn live version on in developers Facebook.
 
-  c. Submit a link to your project's repository in order to complete this step.
+8. Add the ability to remove a friend
 
-1. Use Postgresql for your database from the beginning (not sqlite3), that way your deployment to Heroku will go much more smoothly. See the Heroku Docs for setup info.
+9. Make the thumbs down and trash can images red
 
-2. Users must sign in to see anything except the sign in page.
+10. Add likes and comments to notifications
 
-3. User sign-in should use the Devise gem. Devise gives you all sorts of helpful methods so you no longer have to write your own user passwords, sessions, and #current_user methods. See the Railscast (which uses Rails 3) for a step-by-step introduction. The docs will be fully current.
+11. Move profile to user model and make all user data editable
 
-4. Users can send Friend Requests to other Users.
+12. Refactor everything; especially views and SQL queries
 
-5. A User must accept the Friend Request to become friends.
+13. Remove unused files
 
-6. The Friend Request shows up in the notifications section of a User’s navbar.
-
-7. Users can create Posts (text only to start).
-
-8. Users can Like Posts.
-
-9. Users can Comment on Posts.
-
-10. Posts should always display with the post content, author, comments and likes.
-
-11. Treat the Posts Index page like the real Facebook’s “Timeline” feature – show all the recent posts from the current user and users she is friends with.
-
-12. Users can create a Profile with a Photo (just start by using the Gravatar image like you did in the Rails Tutorial).
-
-13. The User Show page contains their Profile information, photo, and Posts.
-
-14. The Users Index page lists all users and buttons for sending Friend Requests to those who are not already friends or who don’t already have a pending request.
-
-15. Sign in should use Omniauth to allow a user to sign in with their real Facebook account. See the RailsCast on FB authentication with Devise for a step-by-step look at how it works.
-
-16. Set up a mailer to send a welcome email when a new user signs up. Use the letter_opener gem (see docs here) to test it in development mode.
-
-17. Deploy your App to Heroku.
-
-18. Set up the SendGrid add-on and start sending real emails. It’s free for low usage tiers.
-
-#Extra Credit
-
-1. Make posts also allow images (either just via a URL or, more complicated, by uploading one).
-
-2. Use the Paperclip gem to allow users to upload a photo to their profile.
-Make your post able to be either a text OR a photo by using a polymorphic association (so users can still like or comment on it while being none-the-wiser).
-
-3. Style it up nicely! We’ll dive into HTML/CSS in the next course.
-
-#Getting Started
-
-1. Think through the data architecture required to make this work. There are a lot of models and a lot of associations, so take the time to plan out your approach.
-
-2. Build the new postgresql rails app $ rails new odin-facebook --database=postgresql, initialize the Git repo, and update the README to link back to this page.
-
-3. Work your way down the list above! Each step will involve a new challenge but you’ve got the tools.
-
-4. You can populate data like users and posts using the Faker gem, which is basically just a library of sample names and emails. It may just be easier, though, for you to write your own seeds in the db/seeds.rb file, which gets run if you type $ rake db:seed.
+14. Write RSpec tests
