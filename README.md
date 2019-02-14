@@ -1,25 +1,6 @@
-# SocialRails
+# [Socialite](https://social-network-on-rails.herokuapp.com/)
 
-SocialRails is inspired by Facebook. Users can sign up, post, comment, like, and add friends. This site is built with Ruby on Rails, Bootstrap, Font Awesome, and Devise.
-
-* [SocialRails](https://social-network-on-rails.herokuapp.com/)
-
-# Future Features:
-
-- Make posts also allow images (either just via a URL or, more complicated, by uploading one)
-- Make nav-bar bell change colors when you have a notification and display the number of notifications
-- Make the notifications page a partial and dropdown on top of the post index page
-- Make the flash alerts position absolute so it doesn't push other elements down
-- Add paginate to all lists (network posts / find friends / notifications)
-- Make friends page a partial that sits in the bottom right column
-- Add OmniAuth Facebook to production environment and turn live version on in developers Facebook.
-- Add the ability to remove a friend
-- Make the thumbs down and trash can images red
-- Add likes and comments to notifications
-- Move profile to user model and make all user data editable
-- Refactor everything; especially views and SQL queries
-- Remove unused files
-- Write RSpec tests
+Open-source alternative to Facebook that any community can self-host to create a private social network where privacy is the main priority
 
 ## Getting Started
 
@@ -62,6 +43,24 @@ CLI:
 ```
 rspec
 ```
+
+# Future Features:
+
+- Change name to Socialite
+- Make posts also allow images (either just via a URL or, more complicated, by uploading one)
+- Make nav-bar bell change colors when you have a notification and display the number of notifications
+- Make the notifications page a partial and dropdown on top of the post index page
+- Make the flash alerts position absolute so it doesn't push other elements down
+- Add paginate to all lists (network posts / find friends / notifications)
+- Make friends page a partial that sits in the bottom right column
+- Add OmniAuth Facebook to production environment and turn live version on in developers Facebook.
+- Add the ability to remove a friend
+- Make the thumbs down and trash can images red
+- Add likes and comments to notifications
+- Move profile to user model and make all user data editable
+- Refactor everything; especially views and SQL queries
+- Remove unused files
+- Write RSpec tests
 
 ## Built With
 
